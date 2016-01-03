@@ -1,6 +1,6 @@
 define('binding/binding', [
-	'class', 'binding/notify-property-changed', 'binding/converter'
-], function(Class, NotifyPropertyChanged, Converter) {
+	'class', 'binding/observable-interface', 'binding/converter'
+], function(Class, ObservableInterface, Converter) {
 	/**
 	 * @class Binding
 	 * @namespace Binding
@@ -34,12 +34,12 @@ define('binding/binding', [
 		 * @param {Object} source
 		 */
 		setSource: function(source) {
-			if (NotifyPropertyChanged.isImplementedBy(this.source)) {
-				this.source.propertyChanged.remove(this.onSourcePropertyChanged, this);
+			if (ObservableInterface.isImplementedBy(this.source)) {
+				this.source.changed.remove(this.onSourceChanged, this);
 			}
 			this.source = source;
-			if (NotifyPropertyChanged.isImplementedBy(this.source)) {
-				this.source.propertyChanged.add(this.onSourcePropertyChanged, this);
+			if (ObservableInterface.isImplementedBy(this.source)) {
+				this.source.changed.add(this.onSourceChanged, this);
 			}
 			this.updateTarget();
 		},
@@ -136,7 +136,7 @@ define('binding/binding', [
 		 * @param {Binding.NotifyPropertyChanged} source
 		 * @param {String} name
 		 */
-		onSourcePropertyChanged: function(source, name) {
+		onSourceChanged: function(source, name) {
 			if (name === this.sourceProperty || this.sourceProperty === undefined ||
 					this.sourceProperty === null || this.sourceProperty === '') {
 				this.updateTarget();
