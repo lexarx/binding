@@ -1,22 +1,22 @@
-define('binding/observable', [
-	'class', 'binding/observable-interface', 'event'
-], function(Class, ObservableInterface, Event) {
-	/**
-	 * @class Observable
-	 * @implements {Binding.ObservableInterface}
-	 * @namespace Binding
-	 */
-	var Observable = Class.extend({
-		constructor: function() {
-			this.changed = new Event();
-		},
+var Class = require('class');
+var ObservableInterface = require('binding/observable-interface');
+var Event = require('event');
 
-		notifyChanged: function(property) {
-			this.changed.trigger(this, property);
-		}
-	});
+/**
+ * @class Observable
+ * @implements {Binding.ObservableInterface}
+ * @namespace Binding
+ */
+var Observable = Class.extend({
+	constructor: function() {
+		this.changed = new Event();
+	},
 
-	ObservableInterface.addTo(Observable);
-
-	return Observable;
+	notifyChanged: function(property) {
+		this.changed.trigger(this, property);
+	}
 });
+
+ObservableInterface.addTo(Observable);
+
+module.exports = Observable;

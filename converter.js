@@ -1,10 +1,9 @@
-define('binding/converter', [
-	'interface'
-], function(Interface) {
-	/**
-	 * @interface Converter
-	 * @namespace Binding
-	 * @method convert
-	 */
-	return new Interface();
-});
+var Interface = require('interface');
+/**
+ * @interface Converter
+ * @namespace Binding
+ * @method convert
+ */
+var Converter = new Interface();
+
+module.exports = Converter;
