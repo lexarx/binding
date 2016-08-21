@@ -8,8 +8,20 @@ var Event = require('event');
  * @namespace Binding
  */
 var Observable = Class.extend({
-	constructor: function() {
+	constructor: function(object) {
 		this.changed = new Event();
+		if (object) {
+			for (var property in object) {
+				this[property] = object[property];
+			}
+		}
+	},
+
+	set: function(property, value) {
+		if (this[property] !== value) {
+			this[property] = value;
+			this.notifyChanged(property);
+		}
 	},
 
 	notifyChanged: function(property) {
